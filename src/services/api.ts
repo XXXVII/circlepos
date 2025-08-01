@@ -9,7 +9,7 @@ import {
 import { ValidationError } from '@/types/validation'
 import { errorLogger } from '@/utils/errorLogger'
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 class FetchError extends Error {
   constructor(
@@ -55,7 +55,11 @@ const createUserFriendlyError = (
   const status = error.status
 
   if (status >= 500) {
-    errorLogger.logServerError(`Server error: ${error.message}`, endpoint, status)
+    errorLogger.logServerError(
+      `Server error: ${error.message}`,
+      endpoint,
+      status
+    )
     return {
       message: 'Server error occurred. Please try again in a moment.',
       code: 'SERVER_ERROR',
@@ -86,7 +90,10 @@ const createUserFriendlyError = (
   }
 }
 
-const fetchWithError = async (url: string, options?: RequestInit): Promise<Response> => {
+const fetchWithError = async (
+  url: string,
+  options?: RequestInit
+): Promise<Response> => {
   try {
     const response = await fetch(`${API_BASE_URL}${url}`, {
       headers: {
@@ -109,7 +116,9 @@ const fetchWithError = async (url: string, options?: RequestInit): Promise<Respo
     if (error instanceof FetchError) {
       throw error
     }
-    throw new FetchError(error instanceof Error ? error.message : 'Network error')
+    throw new FetchError(
+      error instanceof Error ? error.message : 'Network error'
+    )
   }
 }
 
