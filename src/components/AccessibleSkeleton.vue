@@ -73,8 +73,9 @@ withDefaults(defineProps<Props>(), {
 .skeleton-book-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 2rem;
-  padding: 2rem 0;
+  row-gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 /* Book Card Skeleton */
